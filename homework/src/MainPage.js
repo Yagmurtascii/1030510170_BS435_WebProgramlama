@@ -1,8 +1,6 @@
 import React from 'react';
 import './MainPage.css';
 function MainPage() {
-
-
     const containerStyle = {
         display: 'flex',
         flexDirection: 'column',
