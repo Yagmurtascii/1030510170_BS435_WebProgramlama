@@ -1,5 +1,6 @@
 import React from 'react';
 import './MainPage.css';
+import {Button,Image} from "react-bootstrap";
 function MainPage() {
     const containerStyle = {
         display: 'flex',
@@ -7,28 +8,20 @@ function MainPage() {
         alignItems: 'center',
     };
 
-    const imgStyle={
-        width:'40%',
-        height:'40%',
-        marginTop:'2em',
-        marginBottom:'4em'
-    }
 
-    const buttonStyle={
-        width:'40%',
-        height:'40%',
-        marginTop:'-3em',
-        marginBottom:'4em',
-        padding:'20px'
-    }
     const changePage=()=>
     {
         window.location.href='/mode';
     }
     return (
-        <div style={containerStyle}>
-            <img style={imgStyle} src="Images/home.png" alt="Resim Açıklaması"/>
-            <button style={buttonStyle} onClick={changePage}>PLAY</button>
+        <div className="text-center mt-5" style={containerStyle}>
+            <Image className="text-center" src="Images/home.png"  rounded />
+            <Button
+
+                variant="warning"
+                className="border-dark mt-4 mb-4 pl-5 pr-5 pt-3 pb-3"
+                onClick={changePage}>
+                PLAY   </Button>
         </div>
     );
 }

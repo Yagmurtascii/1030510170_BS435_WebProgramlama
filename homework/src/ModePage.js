@@ -1,6 +1,7 @@
 import React from 'react';
 import MainPage from "./MainPage";
 import ClassicMode from "./ClassicMode";
+import {Card, Col, Row} from "react-bootstrap";
 function ModePage() {
     const divStyle = "d-flex flex-column align-items-center justify-content-center m-5";
     const buttonStyle="btn btn-success btn-lg p-5 m-3 btn-"
@@ -18,9 +19,33 @@ function ModePage() {
 
     return (
         <div className={divStyle} >
-            <button className={buttonStyle} onClick={() => route("classic")}>KLASİK</button>
-            <button className={buttonStyle} onClick={() => route("timing")} >SÜRELİ</button>
-            <button className={buttonStyle} onClick={() => route("punishment")} >CEZALI</button>
+            <Card className="m-3" border="dark" bg="info" style={{ width: '18rem'}} onClick={() => route("classic")}>
+                <Card.Body >
+                    <Card.Title >KLASİK OYUN</Card.Title>
+                    <Card.Text>
+                        Oyuncu 5 tahmin hakkını kullanarak random üretilen sayıyı test etmeye çalışır.
+                    </Card.Text>
+                </Card.Body>
+            </Card>
+
+            <Card className="m-3" border="dark" bg="info" style={{ width: '18rem' }} onClick={() => route("timing")}>
+                <Card.Body >
+                    <Card.Title >SÜRELİ OYUN</Card.Title>
+                    <Card.Text>
+                        Oyuncu süreye karşı random üretilen süreyi tahmin etmeye çalışır.
+                    </Card.Text>
+                </Card.Body>
+            </Card>
+
+            <Card className="m-3" border="dark" bg="info" style={{ width: '18rem'}} onClick={() => route("punishment")}>
+                <Card.Body >
+                    <Card.Title >CEZALI OYUN</Card.Title>
+                    <Card.Text>
+                        Some quick example text to build on the card title and make up the
+                        bulk of the card's content.
+                    </Card.Text>
+                </Card.Body>
+            </Card>
         </div>
     );
 }
