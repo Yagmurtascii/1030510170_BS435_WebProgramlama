@@ -1,66 +1,72 @@
 import React, {useState} from 'react';
 import {Button, Col, Container, InputGroup, ProgressBar, Row} from "react-bootstrap";
 import Form from 'react-bootstrap/Form';
+import GenerateRandom from "./GenerateRandom";
+import generateRandom from "./GenerateRandom";
 
 function ClassicMode() {
-    const generateRandomNumber = () => {
-        const generateNumber = Math.floor(Math.random() * 100);
-        return generateNumber;
-    };
-    const [randomNumber, setRandomNumber] = useState(generateRandomNumber());
+
+    const [randomNumber, setRandomNumber] = useState(<GenerateRandom></GenerateRandom>);
     const [guessNumber, setGuessNumber] = useState('');
     const [count, setCount] = useState(5);
-    const [messages, setMessages] = useState("")
+    const [messages, setMessages] = useState("");
     const [bar,setBar]=useState(50);
     const [variant,setVariant]=useState("");
     const handleGuessChange = (event) => {
         setGuessNumber(event.target.value);
+
     };
     const check = () => {
 
-        if (count >=0) {
-            setCount(prevCount => prevCount -1);
-            if(guessNumber<=100 && guessNumber>=0 )
-            {
+        if (count >= 0) {
+            setCount(prevCount => prevCount - 1);
+            if (guessNumber <= 100 && guessNumber >= 0) {
                 if (guessNumber < randomNumber) {
+
                     setMessages("ARTTIR");
-                    setBar(prevbar=>prevbar+10)
+
+                    setBar(prevbar => prevbar + 10)
                     setVariant("danger");
-                }
-                else if (guessNumber > randomNumber) {
+                } else if (guessNumber > randomNumber) {
                     setMessages("AZALT");
-                    setBar(prevbar=>prevbar-10)
+
+                    setBar(prevbar => prevbar - 10)
                     setVariant("warning");
-                }
-                else {
+                } else {
                     setMessages("BULDUN!");
+
                     setBar(50);
                     setVariant("success");
                 }
-            }
-            else
+            } else {
                 setMessages("Girdiğiniz sayı istenilen aralıkta değil.")
 
-            if(guessNumber==='') {
+            }
+
+
+            if (guessNumber === '') {
                 setMessages("Bir değer giriniz")
                 setBar(50);
                 setVariant("primary");
             }
         }
 
-        if (count === 1) {
-            const button = document.getElementById('guessButton');
-            const input = document.getElementById('inputGroup');
-            if (button) {
-                button.disabled = true;
-                input.disabled=true;
-            }
+    }
+
+    if (count === 1) {
+        const button = document.getElementById('guessButton');
+        const input = document.getElementById('inputGroup');
+        if (button) {
+            button.disabled = true;
+            input.disabled = true;
         }
     }
+
     return (
         <div style={{marginTop: 15 + 'em'}}>
             <Container>
-                <Row className="text-center"><h4>Tahmin Hakkı: {count}</h4></Row>
+
+                <Row className="text-center"><h4>Tahmin hakkı: {count}</h4></Row>
                 <Row className="text-center"><h4>{messages}</h4></Row>
                 <Row><ProgressBar
                     className="m-3"
@@ -78,7 +84,7 @@ function ClassicMode() {
                     <Col><h4>TAHMİN EDİLEN SAYI: {guessNumber}</h4></Col>
                 </Row>
                 <Row>
-                    <InputGroup className="mb-3" >
+                    <InputGroup className="mb-3">
                         <Form.Control
                             id="inputGroup"
                             placeholder="TAHMİNDE BULUNMAK İSTEDİĞİNİZ SAYIYI GİRİN"
