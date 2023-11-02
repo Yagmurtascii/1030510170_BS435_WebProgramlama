@@ -1,35 +1,32 @@
 import React, {useState} from 'react';
 import {Button, Col, Container, InputGroup, ProgressBar, Row} from "react-bootstrap";
 import Form from 'react-bootstrap/Form';
-import GenerateRandom from "./GenerateRandom";
-import generateRandom from "./GenerateRandom";
+import Generate from "./GenerateRandom";
+
+
 
 function ClassicMode() {
-
-    const [randomNumber, setRandomNumber] = useState(<GenerateRandom></GenerateRandom>);
+    const [randomNumber, setRandomNumber] = useState(Generate);
     const [guessNumber, setGuessNumber] = useState('');
     const [count, setCount] = useState(5);
     const [messages, setMessages] = useState("");
     const [bar,setBar]=useState(50);
     const [variant,setVariant]=useState("");
     const handleGuessChange = (event) => {
-        setGuessNumber(event.target.value);
-
+        setGuessNumber(document.getElementById('inputGroup').value);
     };
+
     const check = () => {
 
         if (count >= 0) {
             setCount(prevCount => prevCount - 1);
             if (guessNumber <= 100 && guessNumber >= 0) {
                 if (guessNumber < randomNumber) {
-
                     setMessages("ARTTIR");
-
                     setBar(prevbar => prevbar + 10)
                     setVariant("danger");
                 } else if (guessNumber > randomNumber) {
                     setMessages("AZALT");
-
                     setBar(prevbar => prevbar - 10)
                     setVariant("warning");
                 } else {

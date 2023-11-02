@@ -4,7 +4,7 @@ import {Button, FormLabel} from "react-bootstrap";
 function Countdown({seconds}) {
     const [second, setSecond] = useState(seconds);
     const [isCounting, setIsCounting] = useState(false); // Geriye sayımın devam edip etmediğini kontrol etmek için kullanılır
-    
+
     useEffect(()=>
     {
         let countdown;

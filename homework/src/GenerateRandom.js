@@ -1,8 +1,8 @@
 
 function Generate() {
+        const number= Math.floor(Math.random() * 100);
+        return number;
 
-        const generateNumber = Math.floor(Math.random() * 100);
-        return generateNumber;
 }
 
 export default Generate;
