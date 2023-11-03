@@ -1,15 +1,16 @@
 import React from 'react';
-import GenerateRandom from "./GenerateRandom";
+import 'react-circular-progressbar/dist/styles.css';
+import {Container} from "react-bootstrap";
+import Input from "./InputGroup";
 
-import Countdown from "./Time";
-
-function TimingMode()
-{
-    return(
+function TimingMode() {
+    return (
         <div>
-            <GenerateRandom></GenerateRandom>
-            <Countdown seconds={5}/>
+            <Container className="text-center">
+                <Input isTimeOrChance={false}></Input>
+            </Container>
         </div>
     );
 }
+
 export default TimingMode;
