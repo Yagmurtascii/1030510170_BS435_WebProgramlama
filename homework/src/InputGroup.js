@@ -21,6 +21,10 @@ function Input({isTimeOrChance}) {
         setGuessNumber(document.getElementById('inputGroup').value);
     };
 
+    const changePage=()=>
+    {
+        window.location.href='/mode';
+    }
     useEffect(() => {
         button = document.getElementById('guessButton');
         input = document.getElementById('inputGroup');
@@ -190,6 +194,9 @@ function Input({isTimeOrChance}) {
                 </Row>
                 <Row>
                     <Button id="guessButton" variant="danger" onClick={() => check()}>TAHMİN ET</Button>
+                </Row>
+                <Row>
+                    <Button onClick={changePage} className="mt-3">MOD EKRANINA DÖN</Button>
                 </Row>
             </Container>
         </div>
