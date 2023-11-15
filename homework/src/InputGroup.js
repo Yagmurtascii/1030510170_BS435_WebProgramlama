@@ -29,7 +29,7 @@ function Input({isTimeOrChance}) {
     useEffect(() => {
         button = document.getElementById('guessButton');
         input = document.getElementById('inputGroup');
-        if (isTimeOrChance === 1 || count===0) {
+        if (isTimeOrChance === 1 || count === 0) {
             button.disabled = true
         }
         let countdown;
@@ -46,19 +46,16 @@ function Input({isTimeOrChance}) {
                 button.disabled = true;
                 input.disabled = true;
             }
-            if(guessNumber !== randomNumber)
-            {
+            if (guessNumber !== randomNumber) {
                 setMessages("Hakkınız kalmadı")
             }
         }
-        if(count===0)
-        {
+        if (count === 0) {
             if (button) {
                 button.disabled = true;
                 input.disabled = true;
             }
-            if(guessNumber !== randomNumber)
-            {
+            if (guessNumber !== randomNumber) {
                 setMessages("Hakkınız kalmadı")
             }
         }
@@ -67,7 +64,7 @@ function Input({isTimeOrChance}) {
             clearInterval(countdown); //zamanlayıcı temizlenir
         };
 
-    }, [second,count]) //second her güncellendiğinde useEffect tekrardan çalışır.
+    }, [second, count]) //second her güncellendiğinde useEffect tekrardan çalışır.
 
 
     const startCountdown = () => {
@@ -92,10 +89,9 @@ function Input({isTimeOrChance}) {
                 setMessages("BULDUN!");
                 setBar(50);
                 setVariant("success");
-                if(isTimeOrChance===1) {
+                if (isTimeOrChance === 1) {
                     setSecond(0)
-                }
-                else {
+                } else {
                     setCount(0)
                 }
             }
@@ -113,18 +109,22 @@ function Input({isTimeOrChance}) {
             if (second >= 0) {
                 compare();
             }
-        }
-        else if (isTimeOrChance === 0) {
+        } else if (isTimeOrChance === 0) {
             if (count > 0) {
                 setCount(prevCount => prevCount - 1);
                 compare();
             }
-        }
-        else {
+        } else {
             compare();
         }
     }
-
+    const handleKeyPress = (e) => {
+        // Enter tuşuna basıldığında keyCode 13 olur
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            startCountdown();
+        }
+    };
     return (
         <div>
             <Container>
@@ -144,9 +144,11 @@ function Input({isTimeOrChance}) {
                 ) : isTimeOrChance === 1 ?
                     (
                         <Container>
-                            <Col> <Button className="m-5" onClick={() => startCountdown()}
-                                          style={{visibility: buttonVisible ? 'visible' : 'hidden'}}>BAŞLA</Button></Col>
 
+                            <Col> <Button className="m-5"
+                                          onClick={() => startCountdown()}
+                                          style={{visibility: buttonVisible ? 'visible' : 'hidden'}}>
+                                BAŞLA</Button></Col>
                             <Row className="text-center"><h4>{messages}</h4></Row>
                             <Col> <CircularProgressbar className="justify-content-center mb-3" value={second}
                                                        text={`${second}`}
@@ -164,7 +166,6 @@ function Input({isTimeOrChance}) {
                         </Container>
                     )
                 }
-
 
 
                 <Row>

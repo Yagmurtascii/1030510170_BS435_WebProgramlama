@@ -1,6 +1,6 @@
 import './App.css';
 import MainPage from "./MainPage";
-import {createBrowserRouter,  RouterProvider} from "react-router-dom";
+import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import ModePage from "./ModePage";
 import ClassicMode from "./ClassicMode";
 import TimingMode from "./TimingMode";
@@ -35,6 +35,7 @@ const router = createBrowserRouter([
     },
 
 ]);
+
 function App() {
 
     return (
