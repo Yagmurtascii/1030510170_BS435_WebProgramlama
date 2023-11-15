@@ -29,10 +29,9 @@ function Input({isTimeOrChance}) {
     useEffect(() => {
         button = document.getElementById('guessButton');
         input = document.getElementById('inputGroup');
-        if (isTimeOrChance === 1) {
+        if (isTimeOrChance === 1 || count===0) {
             button.disabled = true
         }
-
         let countdown;
         if (isCounting && second > 0) //butona basıldığında işlemi başlatmak adına bir değişken konur.
         {
@@ -41,23 +40,34 @@ function Input({isTimeOrChance}) {
                 setSecond((prevSecond) => prevSecond - 1); //azaltma işlemi
             }, 1000); //  1 saniye
         }
-
         if (second <= 0) {
             clearInterval(countdown);
-            const button = document.getElementById('guessButton');
-            const input = document.getElementById('inputGroup');
             if (button) {
                 button.disabled = true;
                 input.disabled = true;
             }
+            if(guessNumber !== randomNumber)
+            {
+                setMessages("Hakkınız kalmadı")
+            }
         }
-
+        if(count===0)
+        {
+            if (button) {
+                button.disabled = true;
+                input.disabled = true;
+            }
+            if(guessNumber !== randomNumber)
+            {
+                setMessages("Hakkınız kalmadı")
+            }
+        }
 
         return () => {
             clearInterval(countdown); //zamanlayıcı temizlenir
         };
 
-    }, [second]) //second her güncellendiğinde useEffect tekrardan çalışır.
+    }, [second,count]) //second her güncellendiğinde useEffect tekrardan çalışır.
 
 
     const startCountdown = () => {
@@ -68,99 +78,53 @@ function Input({isTimeOrChance}) {
         setButtonVisible(false);
     };
 
-    const check = () => {
-
-        if (isTimeOrChance === 1) // isTimeOrChance true ise zaman false is chance
-        {
-            if (second >= 0) {
-                if (guessNumber <= 100 && guessNumber >= 0) {
-                    if (guessNumber < randomNumber) {
-                        setMessages("ARTTIR");
-                    } else if (guessNumber > randomNumber) {
-                        setMessages("AZALT");
-                    } else {
-                        setMessages("BULDUN!");
-                        setSecond(0);
-                    }
-                } else {
-                    setMessages("Girdiğiniz sayı istenilen aralıkta değil.")
+    const compare = () => {
+        if (guessNumber <= 100 && guessNumber >= 0) {
+            if (guessNumber < randomNumber) {
+                setMessages("ARTTIR");
+                setBar(prevbar => prevbar + 10)
+                setVariant("danger");
+            } else if (guessNumber > randomNumber) {
+                setMessages("AZALT");
+                setBar(prevbar => prevbar - 10)
+                setVariant("warning");
+            } else {
+                setMessages("BULDUN!");
+                setBar(50);
+                setVariant("success");
+                if(isTimeOrChance===1) {
+                    setSecond(0)
                 }
-
-                if (guessNumber === '') {
-                    setMessages("Bir değer giriniz")
-
-                }
-            }
-
-            if (second === 0) {
-                const button = document.getElementById('guessButton');
-                const input = document.getElementById('inputGroup');
-                if (button) {
-                    button.disabled = true;
-                    input.disabled = true;
-                }
-            }
-        } else if (isTimeOrChance === 0) {
-            if (count > 0) {
-                setCount(prevCount => prevCount - 1);
-                if (guessNumber <= 100 && guessNumber >= 0) {
-                    if (guessNumber < randomNumber) {
-                        setMessages("ARTTIR");
-                        setBar(prevbar => prevbar + 10)
-                        setVariant("danger");
-                    } else if (guessNumber > randomNumber) {
-                        setMessages("AZALT");
-                        setBar(prevbar => prevbar - 10)
-                        setVariant("warning");
-                    } else {
-                        setMessages("BULDUN!");
-                        setCount(0)
-                        setBar(50);
-                        setVariant("success");
-                    }
-                } else {
-                    setMessages("Girdiğiniz sayı istenilen aralıkta değil.")
-                }
-
-                if (guessNumber === '') {
-                    setMessages("Bir değer giriniz")
-                    setBar(50);
-                    setVariant("primary");
-                }
-            }
-            if (count === 1) {
-                if (button) {
-                    button.disabled = true;
-                    input.disabled = true;
+                else {
+                    setCount(0)
                 }
             }
         } else {
-            if (guessNumber <= 100 && guessNumber >= 0) {
-                if (guessNumber < randomNumber) {
-                    setMessages("Arttır");
-                    setBar(prevbar => prevbar + 10)
-                    setVariant("danger");
-                } else if (guessNumber > randomNumber) {
-                    setMessages("AZALT");
-                    setBar(prevbar => prevbar - 10)
-                    setVariant("warning");
-                } else {
-                    setMessages("BULDUN!");
-                    setCount(0)
-                    setBar(50);
-                    setVariant("success");
-                }
-            } else {
-                setMessages("Girdiğiniz sayı istenilen aralıkta değil.")
-            }
-
-            if (guessNumber === '') {
-                setMessages("Bir değer giriniz")
-                setBar(50);
-                setVariant("primary");
-            }
+            setMessages("Girdiğiniz sayı istenilen aralıkta değil.")
+        }
+        if (guessNumber === '') {
+            setMessages("Bir değer giriniz")
+            setBar(50);
+            setVariant("primary");
         }
     }
+    const check = () => {
+        if (isTimeOrChance === 1) {
+            if (second >= 0) {
+                compare();
+            }
+        }
+        else if (isTimeOrChance === 0) {
+            if (count > 0) {
+                setCount(prevCount => prevCount - 1);
+                compare();
+            }
+        }
+        else {
+            compare();
+        }
+    }
+
     return (
         <div>
             <Container>
@@ -200,9 +164,12 @@ function Input({isTimeOrChance}) {
                         </Container>
                     )
                 }
+
+
+
                 <Row>
                     <Col>
-                        <h4>Random Number: {randomNumber }</h4>
+                        <h4>Random Number: {randomNumber}</h4>
                     </Col>
                     <Col></Col>
                     <Col><h4>TAHMİN EDİLEN SAYI: {guessNumber}</h4></Col>
@@ -230,4 +197,5 @@ function Input({isTimeOrChance}) {
         </div>
     );
 }
+
 export default Input;
