@@ -1,8 +1,8 @@
+import {useState} from "react";
 
-function Generate() {
-        const number= Math.floor(Math.random() * 100);
+
+export const Generate = () => {
+    const [number, setNumber] = useState(Math.floor(Math.random() * 100));
         return number;
-
 }
 
-export default Generate;

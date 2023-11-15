@@ -1,11 +1,12 @@
 import Form from "react-bootstrap/Form";
 import {Button, Col, Container, InputGroup, ProgressBar, Row} from "react-bootstrap";
 import React, {useEffect, useState} from "react";
-import Generate from "./GenerateRandom";
+
 import {CircularProgressbar} from "react-circular-progressbar";
+import {Generate} from "./GenerateRandom";
 
 function Input({isTimeOrChance}) {
-    const [randomNumber, setRandomNumber] = useState(Generate);
+    const [randomNumber, setRandomNumber] = useState(Generate(0));
     const [guessNumber, setGuessNumber] = useState('');
     const [count, setCount] = useState(5);
     const [messages, setMessages] = useState("");
@@ -13,6 +14,7 @@ function Input({isTimeOrChance}) {
     const [variant, setVariant] = useState("");
     const [second, setSecond] = useState(20);
     const [isCounting, setIsCounting] = useState(false); // Geriye sayımın devam edip etmediğini kontrol etmek için kullanılır
+    const [isGeneratePunishment, setIsGeneratePunishment] = useState(false);
     let button;
     let input;
     const [buttonVisible, setButtonVisible] = useState(true);
@@ -21,23 +23,20 @@ function Input({isTimeOrChance}) {
         setGuessNumber(document.getElementById('inputGroup').value);
     };
 
-    const changePage=()=>
-    {
-        window.location.href='/mode';
+    const changePage = () => {
+        window.location.href = '/mode';
     }
     useEffect(() => {
         button = document.getElementById('guessButton');
         input = document.getElementById('inputGroup');
-        if (isTimeOrChance === false) {
+        if (isTimeOrChance === 1) {
             button.disabled = true
-
         }
 
         let countdown;
         if (isCounting && second > 0) //butona basıldığında işlemi başlatmak adına bir değişken konur.
         {
             button.disabled = false;
-
             countdown = setInterval(() => {
                 setSecond((prevSecond) => prevSecond - 1); //azaltma işlemi
             }, 1000); //  1 saniye
@@ -52,6 +51,7 @@ function Input({isTimeOrChance}) {
                 input.disabled = true;
             }
         }
+
 
         return () => {
             clearInterval(countdown); //zamanlayıcı temizlenir
@@ -70,7 +70,7 @@ function Input({isTimeOrChance}) {
 
     const check = () => {
 
-        if (isTimeOrChance === false) // isTimeOrChance true ise zaman false is chance
+        if (isTimeOrChance === 1) // isTimeOrChance true ise zaman false is chance
         {
             if (second >= 0) {
                 if (guessNumber <= 100 && guessNumber >= 0) {
@@ -100,8 +100,8 @@ function Input({isTimeOrChance}) {
                     input.disabled = true;
                 }
             }
-        } else {
-            if (count >= 0) {
+        } else if (isTimeOrChance === 0) {
+            if (count > 0) {
                 setCount(prevCount => prevCount - 1);
                 if (guessNumber <= 100 && guessNumber >= 0) {
                     if (guessNumber < randomNumber) {
@@ -134,25 +134,50 @@ function Input({isTimeOrChance}) {
                     input.disabled = true;
                 }
             }
+        } else {
+            if (guessNumber <= 100 && guessNumber >= 0) {
+                if (guessNumber < randomNumber) {
+                    setMessages("Arttır");
+                    setBar(prevbar => prevbar + 10)
+                    setVariant("danger");
+                } else if (guessNumber > randomNumber) {
+                    setMessages("AZALT");
+                    setBar(prevbar => prevbar - 10)
+                    setVariant("warning");
+                } else {
+                    setMessages("BULDUN!");
+                    setCount(0)
+                    setBar(50);
+                    setVariant("success");
+                }
+            } else {
+                setMessages("Girdiğiniz sayı istenilen aralıkta değil.")
+            }
+
+            if (guessNumber === '') {
+                setMessages("Bir değer giriniz")
+                setBar(50);
+                setVariant("primary");
+            }
         }
     }
     return (
         <div>
             <Container>
-                {isTimeOrChance ? (
-                        <Container className="mt-5">
-                            <Row className="text-center"><h4>Tahmin hakkı: {count}</h4></Row>
-                            <Row className="text-center"><h4>{messages}</h4></Row>
-                            <Row><ProgressBar
-                                animated
-                                className="m-3"
-                                variant={variant}
-                                now={bar}
-                                min={1}
-                            >
-                            </ProgressBar></Row>
-                        </Container>
-                    ) :
+                {isTimeOrChance === 0 ? (
+                    <Container className="mt-5">
+                        <Row className="text-center"><h4>Tahmin hakkı: {count}</h4></Row>
+                        <Row className="text-center"><h4>{messages}</h4></Row>
+                        <Row><ProgressBar
+                            animated
+                            className="m-3"
+                            variant={variant}
+                            now={bar}
+                            min={1}
+                        >
+                        </ProgressBar></Row>
+                    </Container>
+                ) : isTimeOrChance === 1 ?
                     (
                         <Container>
                             <Col> <Button className="m-5" onClick={() => startCountdown()}
@@ -165,16 +190,19 @@ function Input({isTimeOrChance}) {
                                                        strokeWidth={4} // strokeWidth değerini küçülttük
                                                        styles={{
                                                            root: {width: '150px', height: '150px'}
-
                                                        }}
                             /></Col>
                         </Container>
+                    ) :
+                    (
+                        <Container className="mt-5">
+                            <Row className="text-center"><h4>{messages}</h4></Row>
+                        </Container>
                     )
                 }
-
                 <Row>
                     <Col>
-                        <h4>Random Number: {randomNumber}</h4>
+                        <h4>Random Number: {randomNumber }</h4>
                     </Col>
                     <Col></Col>
                     <Col><h4>TAHMİN EDİLEN SAYI: {guessNumber}</h4></Col>
@@ -200,8 +228,6 @@ function Input({isTimeOrChance}) {
                 </Row>
             </Container>
         </div>
-    )
-        ;
+    );
 }
-
 export default Input;

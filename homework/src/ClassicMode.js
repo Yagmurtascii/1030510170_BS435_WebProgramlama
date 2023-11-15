@@ -6,7 +6,7 @@ function ClassicMode() {
     return (
         <div>
             <Container>
-                <Row><Input isTimeOrChance={true}></Input></Row>
+                <Row><Input isTimeOrChance={0}></Input></Row>
             </Container>
         </div>
     );

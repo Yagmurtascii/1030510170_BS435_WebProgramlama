@@ -7,7 +7,7 @@ function TimingMode() {
     return (
         <div>
             <Container className="text-center">
-                <Input isTimeOrChance={false}></Input>
+                <Input isTimeOrChance={1}></Input>
             </Container>
         </div>
     );
