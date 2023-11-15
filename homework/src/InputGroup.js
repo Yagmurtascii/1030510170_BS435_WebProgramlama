@@ -118,13 +118,6 @@ function Input({isTimeOrChance}) {
             compare();
         }
     }
-    const handleKeyPress = (e) => {
-        // Enter tuşuna basıldığında keyCode 13 olur
-        if (e.key === 'Enter') {
-            e.preventDefault();
-            startCountdown();
-        }
-    };
     return (
         <div>
             <Container>
