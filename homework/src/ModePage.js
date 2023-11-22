@@ -18,7 +18,7 @@ function ModePage() {
                 <Card.Body>
                     <Card.Title className={titleStyle}>KLASİK OYUN</Card.Title>
                     <Card.Text>
-                        Oyuncu 5 tahmin hakkını kullanarak random üretilen sayıyı test etmeye çalışır.
+                        Oyuncu <i><b>5 tahmin hakkını </b></i> kullanarak random üretilen sayıyı tahmin etmeye çalışır.
                     </Card.Text>
                 </Card.Body>
             </Card>
@@ -27,7 +27,7 @@ function ModePage() {
                 <Card.Body>
                     <Card.Title>SÜRELİ OYUN</Card.Title>
                     <Card.Text>
-                        Oyuncu süreye karşı random üretilen süreyi tahmin etmeye çalışır.
+                        Oyuncu <i><b>süreye </b></i> karşı random üretilen sayıyı tahmin etmeye çalışır.
                     </Card.Text>
                 </Card.Body>
             </Card>
@@ -36,8 +36,7 @@ function ModePage() {
                 <Card.Body>
                     <Card.Title className={titleStyle}>CEZALI OYUN</Card.Title>
                     <Card.Text>
-                        Some quick example text to build on the card title and make up the
-                        bulk of the card's content.
+                        Oyuncunun her yanlış cevabında random üretilen sayı değişir. <i><b>Değişen sayı daha önce girdiğiniz sayı olabilir! </b></i>
                     </Card.Text>
                 </Card.Body>
             </Card>

@@ -10,11 +10,13 @@ function Input({isTimeOrChance}) {
     const [guessNumber, setGuessNumber] = useState('');
     const [count, setCount] = useState(5);
     const [messages, setMessages] = useState("");
+    const [isGameOver, setIsGameOver] = useState("");
+    const [isIncreaseDecrease, setIsIncreaseDecrease] = useState("");
     const [bar, setBar] = useState(50);
     const [variant, setVariant] = useState("");
     const [second, setSecond] = useState(20);
     const [isCounting, setIsCounting] = useState(false); // Geriye sayımın devam edip etmediğini kontrol etmek için kullanılır
-    const [isGeneratePunishment, setIsGeneratePunishment] = useState(false);
+
     let button;
     let input;
     const [buttonVisible, setButtonVisible] = useState(true);
@@ -47,24 +49,24 @@ function Input({isTimeOrChance}) {
                 input.disabled = true;
             }
             if (guessNumber !== randomNumber) {
-                setMessages("Hakkınız kalmadı")
+                setIsGameOver("Hakkınız kalmadı")
             }
-        }
-        if (count === 0) {
+        } else if (count === 0) {
             if (button) {
                 button.disabled = true;
                 input.disabled = true;
             }
             if (guessNumber !== randomNumber) {
-                setMessages("Hakkınız kalmadı")
+                setIsGameOver("Hakkınız kalmadı")
             }
         }
+
 
         return () => {
             clearInterval(countdown); //zamanlayıcı temizlenir
         };
 
-    }, [second, count]) //second her güncellendiğinde useEffect tekrardan çalışır.
+    }, [second, count, randomNumber]) //second her güncellendiğinde useEffect tekrardan çalışır.
 
 
     const startCountdown = () => {
@@ -87,6 +89,8 @@ function Input({isTimeOrChance}) {
                 setVariant("warning");
             } else {
                 setMessages("BULDUN!");
+                setRandomNumber(randomNumber)
+                setIsIncreaseDecrease("");
                 setBar(50);
                 setVariant("success");
                 if (isTimeOrChance === 1) {
@@ -94,6 +98,7 @@ function Input({isTimeOrChance}) {
                 } else {
                     setCount(0)
                 }
+
             }
         } else {
             setMessages("Girdiğiniz sayı istenilen aralıkta değil.")
@@ -108,16 +113,39 @@ function Input({isTimeOrChance}) {
         if (isTimeOrChance === 1) {
             if (second >= 0) {
                 compare();
+                handleGuessChange();
             }
         } else if (isTimeOrChance === 0) {
             if (count > 0) {
                 setCount(prevCount => prevCount - 1);
                 compare();
+                handleGuessChange();
             }
         } else {
+
+
+
+                const randomIncDec = Math.floor(Math.random() * 5);
+                const operator = Math.floor(Math.random() * 2);
+                if (operator === 0) {
+                    setRandomNumber(prevState => prevState + randomIncDec);
+
+                    setIsIncreaseDecrease("Sayı " + randomIncDec + " arttı.");
+
+                } else {
+                    setRandomNumber(prevState => prevState - randomIncDec);
+
+                    setIsIncreaseDecrease("Sayı " + randomIncDec + " azaldı.");
+
+                }
             compare();
+
+
+
         }
     }
+
+
     return (
         <div>
             <Container>
@@ -125,6 +153,7 @@ function Input({isTimeOrChance}) {
                     <Container className="mt-5">
                         <Row className="text-center"><h4>Tahmin hakkı: {count}</h4></Row>
                         <Row className="text-center"><h4>{messages}</h4></Row>
+                        <Row className="text-center"><h4>{isGameOver}</h4></Row>
                         <Row><ProgressBar
                             animated
                             className="m-3"
@@ -143,6 +172,7 @@ function Input({isTimeOrChance}) {
                                           style={{visibility: buttonVisible ? 'visible' : 'hidden'}}>
                                 BAŞLA</Button></Col>
                             <Row className="text-center"><h4>{messages}</h4></Row>
+                            <Row className="text-center"><h4>{isGameOver}</h4></Row>
                             <Col> <CircularProgressbar className="justify-content-center mb-3" value={second}
                                                        text={`${second}`}
                                                        maxValue={20}
@@ -156,11 +186,11 @@ function Input({isTimeOrChance}) {
                     (
                         <Container className="mt-5">
                             <Row className="text-center"><h4>{messages}</h4></Row>
+                            <Row className="text-center"><h4>{isIncreaseDecrease}</h4></Row>
+                            <Row className="text-center"><h4>{isGameOver}</h4></Row>
                         </Container>
                     )
                 }
-
-
                 <Row>
                     <Col>
                         <h4>Random Number: {randomNumber}</h4>

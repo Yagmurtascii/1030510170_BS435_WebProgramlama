@@ -5,8 +5,6 @@ import ModePage from "./ModePage";
 import ClassicMode from "./ClassicMode";
 import TimingMode from "./TimingMode";
 import PunishmentMode from "./PunishmentMode";
-
-
 const router = createBrowserRouter([
     {
         path: "/",
@@ -33,6 +31,7 @@ const router = createBrowserRouter([
         path: "/punishment",
         element: <PunishmentMode></PunishmentMode>
     },
+
 
 ]);
 
