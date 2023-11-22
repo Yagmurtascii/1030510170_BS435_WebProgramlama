@@ -4,6 +4,7 @@ import React, {useEffect, useState} from "react";
 
 import {CircularProgressbar} from "react-circular-progressbar";
 import {Generate} from "./GenerateRandom";
+import {correctSound, wrong, wrongSound} from "./SoundManager";
 
 function Input({isTimeOrChance}) {
     const [randomNumber, setRandomNumber] = useState(Generate(0));
@@ -28,6 +29,7 @@ function Input({isTimeOrChance}) {
     const changePage = () => {
         window.location.href = '/mode';
     }
+
     useEffect(() => {
         button = document.getElementById('guessButton');
         input = document.getElementById('inputGroup');
@@ -48,16 +50,18 @@ function Input({isTimeOrChance}) {
                 button.disabled = true;
                 input.disabled = true;
             }
-            if (guessNumber !== randomNumber) {
+            if (guessNumber !== randomNumber &&messages!=="BULDUN!") {
                 setIsGameOver("Hakkınız kalmadı")
+                wrongSound()
             }
         } else if (count === 0) {
             if (button) {
                 button.disabled = true;
                 input.disabled = true;
             }
-            if (guessNumber !== randomNumber) {
+            if (guessNumber !== randomNumber && messages!=="BULDUN!") {
                 setIsGameOver("Hakkınız kalmadı")
+                wrongSound()
             }
         }
 
@@ -89,6 +93,7 @@ function Input({isTimeOrChance}) {
                 setVariant("warning");
             } else {
                 setMessages("BULDUN!");
+                correctSound()
                 setRandomNumber(randomNumber)
                 setIsIncreaseDecrease("");
                 setBar(50);
@@ -102,11 +107,15 @@ function Input({isTimeOrChance}) {
             }
         } else {
             setMessages("Girdiğiniz sayı istenilen aralıkta değil.")
+            setRandomNumber(randomNumber)
+            setIsIncreaseDecrease("");
+            wrongSound()
         }
         if (guessNumber === '') {
             setMessages("Bir değer giriniz")
             setBar(50);
             setVariant("primary");
+            wrongSound()
         }
     }
     const check = () => {
@@ -124,22 +133,20 @@ function Input({isTimeOrChance}) {
         } else {
 
 
+            const randomIncDec = Math.floor(Math.random() * 5);
+            const operator = Math.floor(Math.random() * 2);
+            if (operator === 0) {
+                setRandomNumber(prevState => prevState + randomIncDec);
 
-                const randomIncDec = Math.floor(Math.random() * 5);
-                const operator = Math.floor(Math.random() * 2);
-                if (operator === 0) {
-                    setRandomNumber(prevState => prevState + randomIncDec);
+                setIsIncreaseDecrease("Sayı " + randomIncDec + " arttı.");
 
-                    setIsIncreaseDecrease("Sayı " + randomIncDec + " arttı.");
+            } else {
+                setRandomNumber(prevState => prevState - randomIncDec);
 
-                } else {
-                    setRandomNumber(prevState => prevState - randomIncDec);
+                setIsIncreaseDecrease("Sayı " + randomIncDec + " azaldı.");
 
-                    setIsIncreaseDecrease("Sayı " + randomIncDec + " azaldı.");
-
-                }
+            }
             compare();
-
 
 
         }
@@ -166,7 +173,6 @@ function Input({isTimeOrChance}) {
                 ) : isTimeOrChance === 1 ?
                     (
                         <Container>
-
                             <Col> <Button className="m-5"
                                           onClick={() => startCountdown()}
                                           style={{visibility: buttonVisible ? 'visible' : 'hidden'}}>
@@ -182,14 +188,26 @@ function Input({isTimeOrChance}) {
                                                        }}
                             /></Col>
                         </Container>
-                    ) :
-                    (
-                        <Container className="mt-5">
-                            <Row className="text-center"><h4>{messages}</h4></Row>
-                            <Row className="text-center"><h4>{isIncreaseDecrease}</h4></Row>
-                            <Row className="text-center"><h4>{isGameOver}</h4></Row>
-                        </Container>
-                    )
+                    ) : isTimeOrChance === 2 ?
+                        (
+                            <Container className="mt-5">
+                                <Row className="text-center"><h4>{messages}</h4></Row>
+                                <Row className="text-center"><h4>{isIncreaseDecrease}</h4></Row>
+                                <Row className="text-center"><h4>{isGameOver}</h4></Row>
+                            </Container>
+                        ) :isTimeOrChance === 3 ?
+                            (
+                                <Container className="mt-5">
+                                    <Row className="text-center"><h4>{messages}</h4></Row>
+                                    <Row className="text-center"><h4>{isIncreaseDecrease}</h4></Row>
+                                    <Row className="text-center"><h4>{isGameOver}</h4></Row>
+                                </Container>
+                            ) :
+                        (
+                            <div></div>
+                        )
+
+
                 }
                 <Row>
                     <Col>
@@ -217,6 +235,7 @@ function Input({isTimeOrChance}) {
                 <Row>
                     <Button onClick={changePage} className="mt-3">MOD EKRANINA DÖN</Button>
                 </Row>
+
             </Container>
         </div>
     );

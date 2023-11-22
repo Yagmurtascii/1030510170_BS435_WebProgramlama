@@ -1,7 +1,5 @@
-const playSound = () => {
-    const ses = new Audio('buttonAudio.mp3');
-    ses.play();
-};
+import {playSound} from "./SoundManager";
+
 
 export const route = (name) => {
     if (name === "timing" || name==="classic" || name==="punishment") {
