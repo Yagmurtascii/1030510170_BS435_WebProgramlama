@@ -13,8 +13,8 @@ function MainPage() {
             <Image className="text-center" src="Images/home.png"  rounded />
             <Button
 
-                variant="warning"
-                className="border-dark mt-4 mb-4 pl-5 pr-5 pt-3 pb-3"
+                variant="danger"
+                className="border-dark mt-4 mb-4 pl-5 pr-5 pt-3 pb-3 text-dark"
                 onClick={()=>
                     route("mode")
                 } >

@@ -5,7 +5,7 @@ import {route} from "./Router";
 function ModePage() {
     const divStyle = "d-flex flex-column align-items-center justify-content-center m-5";
     const titleStyle = "text-center"
-    const cardStyle = "border-dark bg-info text-center m-2 "
+    const cardStyle = "border-dark bg-danger text-center m-2 "
 
     return (
         <div className={divStyle}>
@@ -37,6 +37,7 @@ function ModePage() {
                     <Card.Title className={titleStyle}>CEZALI OYUN</Card.Title>
                     <Card.Text>
                         Oyuncunun her yanlış cevabında random üretilen sayı değişir. <i><b>Değişen sayı daha önce girdiğiniz sayı olabilir! </b></i>
+                        Bu durumda yönlendirme yanlıştır.
                     </Card.Text>
                 </Card.Body>
             </Card>
