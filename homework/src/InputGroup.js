@@ -1,26 +1,31 @@
 import Form from "react-bootstrap/Form";
 import {Button, Col, Container, InputGroup, ProgressBar, Row} from "react-bootstrap";
 import React, {useEffect, useState} from "react";
-
 import {CircularProgressbar} from "react-circular-progressbar";
 import {Generate} from "./GenerateRandom";
-import {correctSound, wrong, wrongSound} from "./SoundManager";
-
-function Input({isTimeOrChance}) {
-    const [randomNumber, setRandomNumber] = useState(Generate(0));
+import {correctSound, wrongSound} from "./SoundManager";
+import {route} from "./Router";
+function Input({isTimeOrChance,counts,endvalues,startvalues,times,randomIncreaseDecrease}) {
+    const [increaseDecrease, setIncreaseDecrease] = useState(randomIncreaseDecrease)
+    const [endValue, setEndValue] = useState(endvalues);
+    const [startValue, setStartValue] = useState(startvalues);
+    const [randomNumber, setRandomNumber] = useState(Generate(startValue,endValue));
     const [guessNumber, setGuessNumber] = useState('');
-    const [count, setCount] = useState(5);
+    const [count, setCount] = useState(counts);
     const [messages, setMessages] = useState("");
     const [isGameOver, setIsGameOver] = useState("");
     const [isIncreaseDecrease, setIsIncreaseDecrease] = useState("");
     const [bar, setBar] = useState(50);
     const [variant, setVariant] = useState("");
-    const [second, setSecond] = useState(20);
+    const [loading, setLoading] = useState("");
+    const [second, setSecond] = useState(times);
     const [isCounting, setIsCounting] = useState(false); // Geriye sayımın devam edip etmediğini kontrol etmek için kullanılır
 
     let button;
     let input;
     const [buttonVisible, setButtonVisible] = useState(true);
+
+
 
     const handleGuessChange = (event) => {
         setGuessNumber(document.getElementById('inputGroup').value);
@@ -50,7 +55,7 @@ function Input({isTimeOrChance}) {
                 button.disabled = true;
                 input.disabled = true;
             }
-            if (guessNumber !== randomNumber &&messages!=="BULDUN!") {
+            if (guessNumber !== randomNumber && messages !== "BULDUN!") {
                 setIsGameOver("Hakkınız kalmadı")
                 wrongSound()
             }
@@ -59,7 +64,7 @@ function Input({isTimeOrChance}) {
                 button.disabled = true;
                 input.disabled = true;
             }
-            if (guessNumber !== randomNumber && messages!=="BULDUN!") {
+            if (guessNumber !== randomNumber && messages !== "BULDUN!") {
                 setIsGameOver("Hakkınız kalmadı")
                 wrongSound()
             }
@@ -131,18 +136,18 @@ function Input({isTimeOrChance}) {
                 handleGuessChange();
             }
         } else {
-
-
-            const randomIncDec = Math.floor(Math.random() * 5);
+            const randomIncDec = Math.floor(Math.random() * increaseDecrease);
             const operator = Math.floor(Math.random() * 2);
+
+
             if (operator === 0) {
                 setRandomNumber(prevState => prevState + randomIncDec);
-
+                compare();
                 setIsIncreaseDecrease("Sayı " + randomIncDec + " arttı.");
 
             } else {
                 setRandomNumber(prevState => prevState - randomIncDec);
-
+                compare();
                 setIsIncreaseDecrease("Sayı " + randomIncDec + " azaldı.");
 
             }
@@ -151,10 +156,23 @@ function Input({isTimeOrChance}) {
 
         }
     }
+    const reload = () => {
+        setLoading(".  .  .  . Yükleniyor .  .  .  .")
+        setTimeout(() => {
+            window.location.reload();
+        }, 500); // Örnek olarak 2 saniye bekletiyoruz
+
+    }
 
 
     return (
         <div>
+            <Row>
+                <Col >
+                    <h2 className="text-center mt-3 text-danger" >{loading}
+                    </h2>
+                </Col>
+            </Row>
             <Container>
                 {isTimeOrChance === 0 ? (
                     <Container className="mt-5">
@@ -195,7 +213,7 @@ function Input({isTimeOrChance}) {
                                 <Row className="text-center"><h4>{isIncreaseDecrease}</h4></Row>
                                 <Row className="text-center"><h4>{isGameOver}</h4></Row>
                             </Container>
-                        ) :isTimeOrChance === 3 ?
+                        ) : isTimeOrChance === 3 ?
                             (
                                 <Container className="mt-5">
                                     <Row className="text-center"><h4>{messages}</h4></Row>
@@ -203,12 +221,15 @@ function Input({isTimeOrChance}) {
                                     <Row className="text-center"><h4>{isGameOver}</h4></Row>
                                 </Container>
                             ) :
-                        (
-                            <div></div>
-                        )
-
-
+                            (
+                                <div></div>
+                            )
                 }
+
+                <Col>
+
+                </Col>
+
                 <Row>
                     <Col>
                         <h4>Random Number: {randomNumber}</h4>
@@ -233,9 +254,9 @@ function Input({isTimeOrChance}) {
                     <Button id="guessButton" variant="danger" onClick={() => check()}>TAHMİN ET</Button>
                 </Row>
                 <Row>
-                    <Button onClick={changePage} className="mt-3">MOD EKRANINA DÖN</Button>
+                    <Button onClick={() => route("mode")} className="mt-3">MOD EKRANINA DÖN</Button>
                 </Row>
-
+                <Row> <Button onClick={reload} className="mt-3 mb-3 bg-black">YENİDEN OYNA</Button> </Row>
             </Container>
         </div>
     );
