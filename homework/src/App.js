@@ -9,6 +9,14 @@ import ClassicGenerate from "./ClassicGenerate";
 import CustomerGame from "./CustomerGame";
 import TimingGenerate from "./TimingGenerate";
 import PunishmentGenerate from "./PunishmentGenerate";
+import {Canvas} from "react-three-fiber";
+import ThreeObjModel from "./Model";
+import Loading from "./Loading";
+import {Suspense} from "react";
+import ThreeFbxModel from "./Model";
+
+
+
 
 const router = createBrowserRouter([
 
@@ -21,13 +29,8 @@ const router = createBrowserRouter([
         element: <ModePage></ModePage>
     },
     {
-        path: "/mode",
-        element: <ModePage></ModePage>
-    },
-
-    {
         path: "/classic",
-        element: <ClassicMode />
+        element: <ClassicMode/>
     },
 
     {
@@ -58,6 +61,11 @@ const router = createBrowserRouter([
         element: <CustomerGame></CustomerGame>,
 
     },
+    {
+        path: "/loading",
+        element: <Loading></Loading>,
+
+    },
 
 
 ]);
@@ -65,7 +73,10 @@ const router = createBrowserRouter([
 function App() {
 
     return (
-        <RouterProvider router={router}/>
+        <>
+            <RouterProvider router={router}/>
+
+        </>
     );
 }
 
