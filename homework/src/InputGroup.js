@@ -25,8 +25,6 @@ function Input({isTimeOrChance,counts,endvalues,startvalues,times,randomIncrease
     let input;
     const [buttonVisible, setButtonVisible] = useState(true);
 
-
-
     const handleGuessChange = (event) => {
         setGuessNumber(document.getElementById('inputGroup').value);
     };
@@ -96,6 +94,7 @@ function Input({isTimeOrChance,counts,endvalues,startvalues,times,randomIncrease
                 setMessages("AZALT");
                 setBar(prevbar => prevbar - 10)
                 setVariant("warning");
+
             } else {
                 setMessages("BULDUN!");
                 correctSound()

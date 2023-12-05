@@ -1,7 +1,6 @@
 import {Canvas} from "react-three-fiber";
 import ThreeFbxModel from "./Model";
 import React, {useEffect, useState} from "react";
-import ModePage from "./ModePage";
 import {route} from "./Router";
 
 function Loading()
