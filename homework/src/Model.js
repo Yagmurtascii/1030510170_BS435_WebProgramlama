@@ -4,7 +4,7 @@ import { useLoader, useFrame } from 'react-three-fiber';
 import { FBXLoader } from 'three/addons';
 import { AnimationMixer } from 'three';
 import {blackMaterial, grayMaterial, greenMaterial, pinkMaterial, redMaterial, whiteMaterial} from './Materials';
-import g from "three/addons/libs/lil-gui.module.min";
+
 
 const ThreeFbxModel = () => {
     const modelRef = useRef();

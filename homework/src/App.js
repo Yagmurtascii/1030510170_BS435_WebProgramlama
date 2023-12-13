@@ -9,11 +9,10 @@ import ClassicGenerate from "./ClassicGenerate";
 import CustomerGame from "./CustomerGame";
 import TimingGenerate from "./TimingGenerate";
 import PunishmentGenerate from "./PunishmentGenerate";
-import {Canvas} from "react-three-fiber";
-import ThreeObjModel from "./Model";
 import Loading from "./Loading";
-import {Suspense} from "react";
-import ThreeFbxModel from "./Model";
+import Login from "./Login";
+import ForgetPassword from "./Password";
+import SignIn from "./SignIn";
 
 
 
@@ -45,7 +44,18 @@ const router = createBrowserRouter([
         path: "/generateClassic",
         element: <ClassicGenerate></ClassicGenerate>,
     },
-
+    {
+        path: "/login",
+        element: <Login></Login>,
+    },
+    {
+        path: "/signIn",
+        element: <SignIn></SignIn>,
+    },
+    {
+        path: "/password",
+        element: <ForgetPassword></ForgetPassword>,
+    },
     {
         path: "/generateTiming",
         element: <TimingGenerate></TimingGenerate>,

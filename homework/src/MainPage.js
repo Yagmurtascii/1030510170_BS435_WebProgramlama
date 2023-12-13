@@ -11,7 +11,6 @@ function MainPage() {
         alignItems: 'center',
     };
     const [loading, setLoading] = useState(false);
-
     const handleButtonClick =  () => {
         setLoading(true);
         route("loading")
@@ -25,10 +24,17 @@ function MainPage() {
                 variant="danger"
                 className="border-dark mt-4 mb-4 pl-5 pr-5 pt-3 pb-3 text-dark"
                 onClick={()=>
-                  handleButtonClick()
+                    route("login")
                 } >
                 OYNA </Button>
 
+            <Button
+                variant="danger"
+                className="border-dark mt-4 mb-4 pl-5 pr-5 pt-3 pb-3 text-dark"
+                onClick={()=>
+                  handleButtonClick()
+                } >
+                MİSAFİR OLARAK OYNA </Button>
             {loading && <Loading />}
         </div>
     );
