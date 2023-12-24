@@ -8,7 +8,7 @@ import ModePage from "./ModePage";
 function Login() {
     const [username, setUsername] = useState();
     const [password, setPassword] = useState();
-    const [isLogin, setIsLogin] = useState(false);
+    const [isLogin, setIsLogin] = useState(true);
     const [values, setValues] = useState(null);
     const [messages, setMessage] = useState("")
     const style = {
@@ -66,7 +66,7 @@ function Login() {
     return (
         <>
             {isLogin && values !== null && <ModePage isLogin={isLogin} values={values}/>}
-            {isLogin === false && (<>
+            {isLogin === true && (<>
                     <Container className="text-center" style={style}>
                         <Row>
                             <Col md="5">

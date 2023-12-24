@@ -21,10 +21,10 @@ public class PlayerController {
     @PostMapping("/login")
     public ResponseEntity<List<Player>> getUserByUsernameAndPassword(@RequestBody Player player) {
         List<Player> user = service.findByUsernameAndPassword(player.getUsername(), player.getPassword());
-        if (user != null && !user.isEmpty()) {
-            return new ResponseEntity<>(user, HttpStatus.OK);
+        if (user != null) {
+            return new ResponseEntity<List<Player>>(user, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<List<Player>>(HttpStatus.NOT_FOUND);
         }
     }
 

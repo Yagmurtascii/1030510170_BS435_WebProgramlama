@@ -3,7 +3,7 @@ import {Button, Card} from "react-bootstrap";
 import {route} from "./Router";
 import Profile from "./Profile";
 
-function ModePage({isLogin , values}) {
+function ModePage({isLogin, values}) {
     const [profile, setProfile] = useState(false)
     const divStyle = "d-flex flex-column align-items-center justify-content-center m-4";
     const titleStyle = "text-center"
@@ -53,19 +53,19 @@ function ModePage({isLogin , values}) {
                             </Card.Text>
                         </Card.Body>
                     </Card>
-                    {isLogin && (<>
-                        <Card className={cardStyle} style={{width: '18rem'}} onClick={() => route("generate")}>
-                            <Card.Body>
-                                <Card.Title className={titleStyle}>OYUN OLUŞTUR</Card.Title>
-                                <Card.Text>
-                                    Kullanıcı kalsik ve zamana dayalı olan oyunlarda <i><b>kendi şartlarına</b></i> göre
-                                    oyun
-                                    oluşturabilir.
 
-                                </Card.Text>
-                            </Card.Body>
-                        </Card>
-                    </>)}
+                    <Card className={cardStyle} style={{width: '18rem'}} onClick={() => route("generate")}>
+                        <Card.Body>
+                            <Card.Title className={titleStyle}>OYUN OLUŞTUR</Card.Title>
+                            <Card.Text>
+                                Kullanıcı kalsik ve zamana dayalı olan oyunlarda <i><b>kendi şartlarına</b></i> göre
+                                oyun
+                                oluşturabilir.
+
+                            </Card.Text>
+                        </Card.Body>
+                    </Card>
+            
                 </>
             )}
             {profile && (<Profile values={values}/>)}
