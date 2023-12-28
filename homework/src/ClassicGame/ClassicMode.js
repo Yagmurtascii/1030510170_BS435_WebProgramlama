@@ -1,6 +1,5 @@
 import {Container, Row} from "react-bootstrap";
-import Input from "./InputGroup";
-
+import Input from "../GeneralAlgorithm/InputGroup";
 
 const ClassicMode = ({count, endValue, startValue}) => {
 

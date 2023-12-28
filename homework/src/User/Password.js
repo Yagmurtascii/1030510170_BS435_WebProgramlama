@@ -2,7 +2,7 @@ import Form from "react-bootstrap/Form";
 import React, {useEffect, useState} from "react";
 import {Button, Col, Container, Row} from "react-bootstrap";
 import * as emailjs from "emailjs-com";
-import {route} from "./Router";
+import {route} from "../Router/Router";
 
 function ForgetPassword() {
     const style = {
@@ -89,5 +89,4 @@ function ForgetPassword() {
         </div>
     )
 }
-
 export default ForgetPassword;

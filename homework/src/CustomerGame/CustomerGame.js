@@ -1,8 +1,6 @@
-import {route} from "./Router";
+import {route} from "../Router/Router";
 import {Card} from "react-bootstrap";
 import React from "react";
-
-
 function CustomerGame() {
     const divStyle = "d-flex flex-column align-items-center justify-content-center m-4";
     const titleStyle = "text-center"
@@ -45,6 +43,5 @@ function CustomerGame() {
             </Card>
         </div>
     )
-
 }
 export default CustomerGame;

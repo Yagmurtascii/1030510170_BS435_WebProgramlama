@@ -1,27 +1,17 @@
 import React, {useState} from 'react';
-import Input from "./InputGroup";
+
 import ClassicMode from "./ClassicMode";
 import Form from "react-bootstrap/Form";
-import {Button, FormControl, Row} from "react-bootstrap";
+import {Button, Row} from "react-bootstrap";
 
 const ClassicGenerate = () => {
-    // counts değerini saklamak için state tanımla
     const [counts, setCounts] = useState();
     const [minValue, setminValue] = useState();
     const [maxValue, setmaxValue] = useState();
-
-    // Form submit olduğunda bu fonksiyon çalışacak
     const handleSubmit = (event) => {
-        // Sayfa yenilemeyi önlemek için formun default davranışını engelle
         event.preventDefault();
-
-        // counts değerini kullan
-        console.log("Counts değeri:", counts);
-
-        // Diğer işlemleri burada yapabilirsiniz
     };
 
-    // Input değeri değiştikçe bu fonksiyon çalışacak
     const handleInputChange = () => {
         setCounts(document.getElementById('count').value);
 
@@ -36,10 +26,10 @@ const ClassicGenerate = () => {
 
     };
 
-    const [isAktif, setIsAktif] = useState(false);
+    const [isActive, setIsActive] = useState(false);
     const [isForm, setIsForm] = useState(true);
     const generate = () => {
-        setIsAktif(true)
+        setIsActive(true)
         setIsForm(false)
     }
 
@@ -65,7 +55,6 @@ const ClassicGenerate = () => {
                         onChange={handleInputChange1}
                         placeholder="En düşük aralık girin"
                     />
-
                     <Form.Control
                         className="mb-4"
                         id="maxValue"
@@ -78,7 +67,7 @@ const ClassicGenerate = () => {
                     <Row> <Button onClick={generate} className="mt-3 mb-3 bg-primary">OLUŞTUR</Button> </Row>
                 </Form>
                 : null}
-            {isAktif === true ?
+            {isActive === true ?
                 <ClassicMode count={counts} endValue={minValue} startValue={maxValue}></ClassicMode> : null
             }
 

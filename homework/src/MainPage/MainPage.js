@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from 'react';
-import './MainPage.css';
+import React, {useState} from 'react';
+import './css/MainPage.css';
 import {Button,Image} from "react-bootstrap";
-import {route} from "./Router";
-import Loading from "./Loading";
+import {route} from "../Router/Router";
+import Loading from "../Loading/Loading";
 function MainPage() {
 
     const containerStyle = {

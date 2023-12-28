@@ -1,6 +1,5 @@
 import {useState} from "react";
 
-
 export const Generate = (startvalue, endValue) => {
     const max = parseInt(startvalue, 10);
     const min=parseInt(endValue, 10);

@@ -1,7 +1,7 @@
 import {Button, Col, Container, Row} from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import React, {useState} from "react";
-import {route} from "./Router";
+import {route} from "../Router/Router";
 
 function SignIn() {
 
@@ -103,8 +103,6 @@ function SignIn() {
     }
     return (
         <div>
-
-
             <Container className="text-center w-25" style={style}>
                 <p className="text-start text-danger fl-1">{generic}</p>
                 <Row>

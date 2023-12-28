@@ -2,14 +2,17 @@ import Form from "react-bootstrap/Form";
 import {Button, Col, Container, InputGroup, ProgressBar, Row} from "react-bootstrap";
 import React, {useEffect, useState} from "react";
 import {CircularProgressbar} from "react-circular-progressbar";
-import {Generate} from "./GenerateRandom";
-import {correctSound, wrongSound} from "./SoundManager";
-import {route} from "./Router";
-function Input({isTimeOrChance,counts,endvalues,startvalues,times,randomIncreaseDecrease}) {
+import {Generate} from "../OtherFunctions/GenerateRandom";
+import {correctSound, wrongSound} from "../OtherFunctions/SoundManager";
+import {route} from "../Router/Router";
+import ThreeFbxModel from "../Loading/Model";
+import {Canvas} from "react-three-fiber";
+
+function Input({isTimeOrChance, counts, endvalues, startvalues, times, randomIncreaseDecrease}) {
     const [increaseDecrease, setIncreaseDecrease] = useState(randomIncreaseDecrease)
     const [endValue, setEndValue] = useState(endvalues);
     const [startValue, setStartValue] = useState(startvalues);
-    const [randomNumber, setRandomNumber] = useState(Generate(startValue,endValue));
+    const [randomNumber, setRandomNumber] = useState(Generate(startValue, endValue));
     const [guessNumber, setGuessNumber] = useState('');
     const [count, setCount] = useState(counts);
     const [messages, setMessages] = useState("");
@@ -17,9 +20,10 @@ function Input({isTimeOrChance,counts,endvalues,startvalues,times,randomIncrease
     const [isIncreaseDecrease, setIsIncreaseDecrease] = useState("");
     const [bar, setBar] = useState(50);
     const [variant, setVariant] = useState("");
-    const [loading, setLoading] = useState("");
     const [second, setSecond] = useState(times);
-    const [isCounting, setIsCounting] = useState(false); // Geriye sayımın devam edip etmediğini kontrol etmek için kullanılır
+    const [isCounting, setIsCounting] = useState(false);
+    const [isLoading, setIsLoading] = useState(false)
+    const [clue, setClue] = useState("")
 
     let button;
     let input;
@@ -29,10 +33,6 @@ function Input({isTimeOrChance,counts,endvalues,startvalues,times,randomIncrease
         setGuessNumber(document.getElementById('inputGroup').value);
     };
 
-    const changePage = () => {
-        window.location.href = '/mode';
-    }
-
     useEffect(() => {
         button = document.getElementById('guessButton');
         input = document.getElementById('inputGroup');
@@ -40,11 +40,11 @@ function Input({isTimeOrChance,counts,endvalues,startvalues,times,randomIncrease
             button.disabled = true
         }
         let countdown;
-        if (isCounting && second > 0) //butona basıldığında işlemi başlatmak adına bir değişken konur.
+        if (isCounting && second > 0)
         {
             button.disabled = false;
             countdown = setInterval(() => {
-                setSecond((prevSecond) => prevSecond - 1); //azaltma işlemi
+                setSecond((prevSecond) => prevSecond - 1);
             }, 1000); //  1 saniye
         }
         if (second <= 0) {
@@ -70,51 +70,44 @@ function Input({isTimeOrChance,counts,endvalues,startvalues,times,randomIncrease
 
 
         return () => {
-            clearInterval(countdown); //zamanlayıcı temizlenir
+            clearInterval(countdown);
         };
 
-    }, [second, count, randomNumber]) //second her güncellendiğinde useEffect tekrardan çalışır.
+    }, [second, count, randomNumber])
 
 
     const startCountdown = () => {
         if (second > 0) {
             setSecond(prevSecond => prevSecond - 1);
         }
-        setIsCounting(true); // butona tıklanınca useEffect çalışmasını tetikler.
+        setIsCounting(true);
         setButtonVisible(false);
     };
 
     const compare = () => {
-        if (guessNumber <= 100 && guessNumber >= 0) {
-            if (guessNumber < randomNumber) {
-                setMessages("ARTTIR");
-                setBar(prevbar => prevbar + 10)
-                setVariant("danger");
-            } else if (guessNumber > randomNumber) {
-                setMessages("AZALT");
-                setBar(prevbar => prevbar - 10)
-                setVariant("warning");
+        if (guessNumber < randomNumber) {
+            setMessages("ARTTIR");
+            setBar(prevbar => prevbar + 10)
+            setVariant("danger");
+        } else if (guessNumber > randomNumber) {
+            setMessages("AZALT");
+            setBar(prevbar => prevbar - 10)
+            setVariant("warning");
 
-            } else {
-                setMessages("BULDUN!");
-                correctSound()
-                setRandomNumber(randomNumber)
-                setIsIncreaseDecrease("");
-                setBar(50);
-                setVariant("success");
-                if (isTimeOrChance === 1) {
-                    setSecond(0)
-                } else {
-                    setCount(0)
-                }
-
-            }
         } else {
-            setMessages("Girdiğiniz sayı istenilen aralıkta değil.")
+            setMessages("BULDUN!");
+            correctSound()
             setRandomNumber(randomNumber)
             setIsIncreaseDecrease("");
-            wrongSound()
+            setBar(50);
+            setVariant("success");
+            if (isTimeOrChance === 1) {
+                setSecond(0)
+            } else {
+                setCount(0)
+            }
         }
+
         if (guessNumber === '') {
             setMessages("Bir değer giriniz")
             setBar(50);
@@ -135,12 +128,18 @@ function Input({isTimeOrChance,counts,endvalues,startvalues,times,randomIncrease
                 handleGuessChange();
             }
         } else {
+
             const randomIncDec = Math.floor(Math.random() * increaseDecrease);
             const operator = Math.floor(Math.random() * 2);
-
-
             if (operator === 0) {
+
                 setRandomNumber(prevState => prevState + randomIncDec);
+                if (randomNumber < startValue || randomNumber > endValue) {
+                    const randomIncDec = Math.floor(Math.random() * increaseDecrease);
+                    setRandomNumber(prevState => prevState + randomIncDec);
+                    compare();
+                }
+
                 compare();
                 setIsIncreaseDecrease("Sayı " + randomIncDec + " arttı.");
 
@@ -151,15 +150,20 @@ function Input({isTimeOrChance,counts,endvalues,startvalues,times,randomIncrease
 
             }
             compare();
-
-
         }
     }
+
+
     const reload = () => {
-        setLoading(".  .  .  . Yükleniyor .  .  .  .")
+        setIsLoading(true);
         setTimeout(() => {
+
             window.location.reload();
-        }, 500); // Örnek olarak 2 saniye bekletiyoruz
+        }, 5000);
+    }
+
+    const showClue = () => {
+        setClue("Üretilen sayının aralığı başta 0-100 arasındadır.")
 
     }
 
@@ -167,12 +171,14 @@ function Input({isTimeOrChance,counts,endvalues,startvalues,times,randomIncrease
     return (
         <div>
             <Row>
-                <Col >
-                    <h2 className="text-center mt-3 text-danger" >{loading}
-                    </h2>
-                </Col>
+                {isLoading && (<>   <Col className="text-center">
+                    <Canvas className="mt-5 text-center" style={{width: '100vw', height: '70vh'}}>
+                        <ThreeFbxModel/>
+                    </Canvas>
+                </Col>  </>)}
             </Row>
-            <Container>
+
+            {isLoading === false && (<> <Container>
                 {isTimeOrChance === 0 ? (
                     <Container className="mt-5">
                         <Row className="text-center"><h4>Tahmin hakkı: {count}</h4></Row>
@@ -224,11 +230,8 @@ function Input({isTimeOrChance,counts,endvalues,startvalues,times,randomIncrease
                                 <div></div>
                             )
                 }
-
                 <Col>
-
                 </Col>
-
                 <Row>
                     <Col>
                         <h4>Random Number: {randomNumber}</h4>
@@ -244,8 +247,6 @@ function Input({isTimeOrChance,counts,endvalues,startvalues,times,randomIncrease
                             value={guessNumber}
                             onChange={handleGuessChange}
                             type="number"
-                            max={100}
-                            min={0}
                         />
                     </InputGroup>
                 </Row>
@@ -256,7 +257,15 @@ function Input({isTimeOrChance,counts,endvalues,startvalues,times,randomIncrease
                     <Button onClick={() => route("mode")} className="mt-3">MOD EKRANINA DÖN</Button>
                 </Row>
                 <Row> <Button onClick={reload} className="mt-3 mb-3 bg-black">YENİDEN OYNA</Button> </Row>
+                <Row className="text-end  justify-content-end">
+                    <Button style={{width: '10rem'}} onClick={() => showClue()}
+                            className="align-content-end bg-warning text-black"
+                    >İpucu</Button>
+                    <Row className="text-end  justify-content-end">{clue}</Row>
+                </Row>
+                <br/>
             </Container>
+            </>)}
         </div>
     );
 }

@@ -2,8 +2,8 @@ import {Button, Col, Container, Image, Row} from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import React, {useState} from "react";
 import {Link} from "react-router-dom";
-import {route} from "./Router";
-import ModePage from "./ModePage";
+import {route} from "../Router/Router";
+import ModePage from "../ModePage/ModePage";
 
 function Login() {
     const [username, setUsername] = useState();
@@ -51,6 +51,7 @@ function Login() {
             })
             .then((data) => {
                 setValues(data)
+
 
                 console.log(data[0])
             })
@@ -103,8 +104,6 @@ function Login() {
                     </Container>
                 </>
             )}
-
-
         </>
     )
 }

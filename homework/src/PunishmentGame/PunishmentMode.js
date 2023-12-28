@@ -1,5 +1,5 @@
 import React from 'react';
-import Input from "./InputGroup";
+import Input from "../GeneralAlgorithm/InputGroup";
 
 function PunishmentMode({endValue, startValue,random}) {
 
@@ -11,5 +11,4 @@ function PunishmentMode({endValue, startValue,random}) {
         <Input isTimeOrChance={2} endvalues={finalEndValue} startvalues={finalStartValue} randomIncreaseDecrease={finalRandom}></Input>
     );
 }
-
 export default PunishmentMode;

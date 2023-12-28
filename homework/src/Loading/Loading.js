@@ -1,7 +1,7 @@
 import {Canvas} from "react-three-fiber";
 import ThreeFbxModel from "./Model";
-import React, {useEffect, useState} from "react";
-import {route} from "./Router";
+import React, {useEffect} from "react";
+import {route} from "../Router/Router";
 
 function Loading()
 {

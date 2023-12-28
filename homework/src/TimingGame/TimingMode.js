@@ -1,7 +1,7 @@
 import React from 'react';
 import 'react-circular-progressbar/dist/styles.css';
 import {Container} from "react-bootstrap";
-import Input from "./InputGroup";
+import Input from "../GeneralAlgorithm/InputGroup";
 
 function TimingMode({ time,endValue,startValue }) {
 

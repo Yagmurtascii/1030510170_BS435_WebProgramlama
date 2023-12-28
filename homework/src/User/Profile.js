@@ -1,8 +1,7 @@
-import {Button, Col, Container, Row} from "react-bootstrap";
+import {Button} from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import React, {useState} from "react";
-import {route} from "./Router";
-import ModePage from "./ModePage";
+import ModePage from "../ModePage/ModePage";
 
 function Profile({values}) {
 
@@ -58,10 +57,7 @@ function Profile({values}) {
     }
 
     const handleUpdate = async () => {
-
-
         if (isMailValid === true && isUserName === true) {
-
             await fetch('http://localhost:8080/player/update', {
                 method: 'PUT',
                 headers: {
@@ -91,9 +87,7 @@ function Profile({values}) {
                 });
         } else
             setMessages("Yanlış girdi")
-
     }
-
     const handleInputChange = (event) => {
         validUsername()
         validMail()
@@ -140,7 +134,6 @@ function Profile({values}) {
             )}
             {isLogin && <ModePage isLogin={isLogin} values={values}></ModePage>}
         </>
-
     )
 }
 

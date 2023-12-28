@@ -1,20 +1,17 @@
-import './App.css';
-import MainPage from "./MainPage";
+import MainPage from "./MainPage/MainPage";
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
-import ModePage from "./ModePage";
-import ClassicMode from "./ClassicMode";
-import TimingMode from "./TimingMode";
-import PunishmentMode from "./PunishmentMode";
-import ClassicGenerate from "./ClassicGenerate";
-import CustomerGame from "./CustomerGame";
-import TimingGenerate from "./TimingGenerate";
-import PunishmentGenerate from "./PunishmentGenerate";
-import Loading from "./Loading";
-import Login from "./Login";
-import ForgetPassword from "./Password";
-import SignIn from "./SignIn";
-
-
+import ModePage from "./ModePage/ModePage";
+import ClassicMode from "./ClassicGame/ClassicMode";
+import TimingMode from "./TimingGame/TimingMode";
+import PunishmentMode from "./PunishmentGame/PunishmentMode";
+import ClassicGenerate from "./ClassicGame/ClassicGenerate";
+import CustomerGame from "./CustomerGame/CustomerGame";
+import TimingGenerate from "./TimingGame/TimingGenerate";
+import PunishmentGenerate from "./PunishmentGame/PunishmentGenerate";
+import Loading from "./Loading/Loading";
+import Login from "./User/Login";
+import ForgetPassword from "./User/Password";
+import SignIn from "./User/SignIn";
 
 
 const router = createBrowserRouter([
@@ -31,7 +28,6 @@ const router = createBrowserRouter([
         path: "/classic",
         element: <ClassicMode/>
     },
-
     {
         path: "/timing",
         element: <TimingMode></TimingMode>
@@ -60,33 +56,24 @@ const router = createBrowserRouter([
         path: "/generateTiming",
         element: <TimingGenerate></TimingGenerate>,
     },
-
     {
         path: "/generatePunishment",
         element: <PunishmentGenerate></PunishmentGenerate>,
     },
-
     {
         path: "/generate",
         element: <CustomerGame></CustomerGame>,
-
     },
     {
         path: "/loading",
         element: <Loading></Loading>,
-
     },
-
-
 ]);
 
 function App() {
 
     return (
-        <>
-            <RouterProvider router={router}/>
-
-        </>
+        <><RouterProvider router={router}/></>
     );
 }
 

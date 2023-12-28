@@ -1,10 +1,8 @@
-// ThreeDancingModel.js
 import React, { useRef, useEffect } from 'react';
 import { useLoader, useFrame } from 'react-three-fiber';
 import { FBXLoader } from 'three/addons';
 import { AnimationMixer } from 'three';
-import {blackMaterial, grayMaterial, greenMaterial, pinkMaterial, redMaterial, whiteMaterial} from './Materials';
-
+import {blackMaterial, pinkMaterial, whiteMaterial} from './Materials';
 
 const ThreeFbxModel = () => {
     const modelRef = useRef();
