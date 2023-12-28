@@ -56,6 +56,7 @@ function ModePage({isLogin, values}) {
                                             sayı daha
                                             önce
                                             girdiğiniz sayı olabilir! </b></i>
+                                            <i><b>Sayı negatif olabilir. </b></i>
                                             Bu durumda yönlendirme yanlıştır.
                                         </Card.Text>
                                     </Card.Body>
