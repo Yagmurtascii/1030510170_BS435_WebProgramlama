@@ -1,15 +1,17 @@
 # Sayı Tahmin Oyunu
 
-- :zero: Öğrenci Numarası: 1030510170
-- :girl:  Öğrenci Adı: Yağmur TAŞCI
-- :books: Ders Adı: BS435 Web Programlama
+Sayı tahmin oyunu 2 aralık arasında sayı random sayı üretir. Kullanıcı ise bu sayıyı tahmin etmeye çalışır.
 
+## Kullanılan Teknolojiler
+- Front-End : React Js kütüphanesi kullanılarak geliştirildi.
+- Back-End: Java Spring Boot ile API geliştirildi.
+- Veritabanı: MS SQL Server 2012 kullanıldı.
 
-# Oyun Kapak Tasarımı
+## Oyun Kapak Tasarımı
 - :movie_camera: [Youtube](https://youtu.be/7_0YERiZKZ8)
 - Revize edildikten sonraki tasarım:<pre>![SAYI TAHMİN OYUNU (4)](https://github.com/Yagmurtascii/1030510170__BS435_WebProgramlama/assets/64540298/3aef69e9-2fbe-4caa-8ad8-76f53209f5f7)
 
-# Oyun Modları
+## Oyun Modları
 <br>
 
 ![2](https://github.com/Yagmurtascii/1030510170_BS435_WebProgramlama/assets/64540298/a207c73e-0112-4f9a-a44a-87ab4dae2a4b)
