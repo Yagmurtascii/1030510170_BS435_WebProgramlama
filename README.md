@@ -1,4 +1,4 @@
-# 1030510170__BS435_WebProgramlama
+# Sayı Tahmin Oyunu
 
 - :zero: Öğrenci Numarası: 1030510170
 - :girl:  Öğrenci Adı: Yağmur TAŞCI
